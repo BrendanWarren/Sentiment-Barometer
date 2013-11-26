@@ -35,7 +35,7 @@ public class Main {
 		
 		final long startTime = System.currentTimeMillis();
 		
-		String brFile = "C:/Users/Brendan/Documents/University/OO Sys 2/workspace/Assignment/res/review6.txt";
+		String brFile = "C:/Users/Brendan/Documents/University/OO Sys 2/workspace/Sentiment-Barometer/res/review6.txt";
 		
 		Tokens MyTokenizer = new Tokens();
 		MyTokenizer.runTokenizer(brFile);
@@ -51,7 +51,7 @@ public class Main {
 		System.out.println("Progress: 0%");
 		
 		// Initialize the WordNet Dictionary.
-        String propsFile = "C:/Users/Brendan/Documents/University/OO Sys 2/workspace/Assignment/res/file_properties.xml";
+        String propsFile = "C:/Users/Brendan/Documents/University/OO Sys 2/workspace/Sentiment-Barometer/res/file_properties.xml";
         Dictionary dictionary = Dictionary.getInstance(new FileInputStream(propsFile));
 		         
 		        		for (String a : MyTokenizer.tokenArray)

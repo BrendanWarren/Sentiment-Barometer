@@ -28,7 +28,7 @@ BufferedReader br = new BufferedReader(new FileReader(brFile));
 		
 		try {
 	        String line = br.readLine();
-	        InputStream is = new FileInputStream("C:/Users/Brendan/Documents/University/OO Sys 2/workspace/Assignment/res/en-token.bin");
+	        InputStream is = new FileInputStream("C:/Users/Brendan/Documents/University/OO Sys 2/workspace/Sentiment-Barometer/res/en-token.bin");
     		TokenizerModel model = new TokenizerModel(is);
     		TokenizerME tokenizer = new TokenizerME(model);
     		
