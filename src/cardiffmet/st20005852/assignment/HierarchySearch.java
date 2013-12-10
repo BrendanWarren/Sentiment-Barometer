@@ -18,26 +18,56 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+
+
 public class HierarchySearch {
 	
-DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+	/*
+	 * 	HierarchySearch.java
+	 * 
+	 * 	Creates the arrays used to search the Hierarchy & takes categ from HierarchyManager.java and returns the relevant isa
+	 * 
+	 */
+	
+	private static HierarchySearch hierarchyInstance;
+	
+	DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 	
 	XPathFactory xpathFactory = XPathFactory.newInstance();
 	XPath xpath = xpathFactory.newXPath();
 	
+	//Make arrays to store Hierarchy
 	ArrayList<String> hierarchyNameArray = new ArrayList<String>();
 	ArrayList<String> hierarchyIsaArray = new ArrayList<String>();
 	
-	void buildHeirarchy() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException, XPathExpressionException
+	Document document;
+	
+	// Use Singleton design pattern so we only have one instance of HierarchySearch
+	public static HierarchySearch getHierarchyInstance() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, XPathExpressionException
 	{
+		// If there is no hierarchyInstance make one. Return hierarchyInstance
+		if (null == hierarchyInstance)
+		{
+			hierarchyInstance = new HierarchySearch();
+			hierarchyInstance.setBuilder();
+			hierarchyInstance.buildHierarchy();
+		}
+		return hierarchyInstance;
+	}
+	
+	private void setBuilder() throws ParserConfigurationException, FileNotFoundException, SAXException, IOException
+	{
+		// Sets up the Hierarchy builder
 		DocumentBuilder builder = builderFactory.newDocumentBuilder();
-		Document document = builder.parse(new FileInputStream("C:/Users/Brendan/Documents/University/OO Sys 2/wn-domains-3.2/wn-affect-1.1/a-hierarchy.xml"));
-		
-		 NodeList heirarchyList = (NodeList) xpath.evaluate("/categ-list/categ", document, XPathConstants.NODESET);
-		    System.out.println("Found " + heirarchyList.getLength() + " elements.");
-
-		    for (int i = 0; i < heirarchyList.getLength(); i++) {
-		    	Node item = heirarchyList.item(i);
+		document = builder.parse(new FileInputStream("C:/Users/Brendan/Documents/University/OO Sys 2/wn-domains-3.2/wn-affect-1.1/a-hierarchy.xml"));
+	}
+	
+	private void buildHierarchy() throws XPathExpressionException
+	{
+		//Builds the Hierarchy arrays
+		 NodeList hierarchyList = (NodeList) xpath.evaluate("/categ-list/categ", document, XPathConstants.NODESET);
+		    for (int i = 0; i < hierarchyList.getLength(); i++) {
+		    	Node item = hierarchyList.item(i);
 		    	if (!item.getAttributes().getNamedItem("name").getNodeValue().equals("root"))
 		    	{
 		    		hierarchyNameArray.add(item.getAttributes().getNamedItem("name").getNodeValue());
@@ -48,15 +78,14 @@ DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 	
 	String getIsa(String name)
 	{
+	//Looks up name in the Hierarchy arrays and returns the result
 	int exist = -1;
 		for(int i=0;i<hierarchyNameArray.size();i++){
-			//System.out.println(nounOffsetArray.get(i) + " " + offset);
 	        if(hierarchyNameArray.get(i).equals(name)){
 	            exist=i;
 	            break;
 	        }
-		}
-		
+		}	
 	
 		if(exist != -1 ) {
 		    return hierarchyIsaArray.get(exist);
