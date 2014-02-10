@@ -12,11 +12,15 @@ import org.xml.sax.SAXException;
 
 public class Main
 {	
-	/*
+	/**
 	 * 	Main.java
 	 * 
 	 * 	Runs SynsetSearch and HierarchySearch to prepare the arrays for later. Passes the text file into the Tokenizer to begin processing
 	 * 	and finally calls getRating in HierarchyManager to display the results.
+	 * 
+	 * @author Brendan
+	 * @since 1.0
+	 * 
 	 * 
 	 */
 	
@@ -25,9 +29,7 @@ public class Main
 	
 	public static void main(String[] args) throws FileNotFoundException, XPathExpressionException, ParserConfigurationException, SAXException, IOException, JWNLException
 	{	
-		SynsetSearch.getSynsetInstance();
-		HierarchySearch.getHierarchyInstance();
-		MyTokenizer.runTokenizer("C:/Users/Brendan/Documents/University/OO Sys 2/workspace/Sentiment-Barometer/res/review6.txt");         
+		MyTokenizer.runTokenizer("C:/Users/Brendan/Documents/University/OO Sys 2/workspace/Sentiment-Barometer/res/review1.txt");         
 	    HierarchyManager.getRating();
 	}
 }

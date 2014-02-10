@@ -73,7 +73,7 @@ public class Tokens
 		{
 			MyProgressKeeper.getProgress();
 			//Check the token with regex. Only words with 3 or more letters can ever match so skip anything else
-		    if (token.matches("[a-zA-Z]{3,}") == true)
+		    if (token.matches("^.{3,}$") == true)
 		    {			
 		    	//Get the POS and pass it onto the SynsetManager
 		    	for (POS pos : POS.getAllPOS())
